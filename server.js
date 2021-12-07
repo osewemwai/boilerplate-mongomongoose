@@ -101,14 +101,15 @@ router.get("/create-and-save-person", function (req, res, next) {
         return next(err);
       }
       res.json(pers);
-      pers.remove();
+      // pers.remove().exec();
+      pers.deleteOne().exec();
     });
   });
 });
 
 const createPeople = require("./myApp.js").createManyPeople;
 router.post("/create-many-people", function (req, res, next) {
-  Person.remove({}, function (err) {
+  /*Person.remove*/Person.deleteMany({}, function (err) {
     if (err) {
       return next(err);
     }
@@ -130,7 +131,9 @@ router.post("/create-many-people", function (req, res, next) {
           return next(err);
         }
         res.json(pers);
-        Person.remove().exec();
+      //  Person.remove().exec(); //This is the original file
+        Person.deleteMany().exec();
+
       });
     });
   });
@@ -155,7 +158,8 @@ router.post("/find-all-by-name", function (req, res, next) {
         return next({ message: "Missing callback argument" });
       }
       res.json(data);
-      Person.remove().exec();
+      // Person.remove().exec();
+      Person.deleteMany().exec();
     });
   });
 });
